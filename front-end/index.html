@@ -3,14 +3,593 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <title>Cynet | Second-Hand Tech & Accessories</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #06b6d4, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-pattern {
+            background-color: #0f172a;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        /* Hide scrollbar for category scroll on mobile */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </head>
-<body>
-<!-- first device -->
- <!-- second device -->
-    <nav>
-        <img src="images/logo.png" alt="Logo" width="100" height="100">
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="bg-cyan-500 p-2 rounded-lg text-white">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900">Cynet</span>
+                </div>
+
+                <!-- Desktop Search -->
+                <div class="hidden md:flex flex-1 max-w-lg mx-8 relative">
+                    <input type="text" id="search-input" placeholder="Search laptops, GPUs, monitors..." 
+                           class="w-full pl-10 pr-4 py-2 rounded-full border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-50">
+                    <i data-lucide="search" class="absolute left-3 top-2.5 text-slate-400 w-5 h-5"></i>
+                </div>
+
+                <!-- Icons -->
+                <div class="flex items-center gap-4">
+                    <button class="p-2 hover:bg-slate-100 rounded-full relative" id="cart-btn">
+                        <i data-lucide="shopping-cart" class="w-6 h-6 text-slate-700"></i>
+                        <span id="cart-count" class="absolute top-0 right-0 bg-cyan-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full transform scale-0 transition-transform duration-200">0</span>
+                    </button>
+                    <button class="md:hidden p-2 hover:bg-slate-100 rounded-full" id="mobile-menu-btn">
+                        <i data-lucide="menu" class="w-6 h-6 text-slate-700"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Search (Visible only on small screens) -->
+            <div class="md:hidden py-3 pb-4">
+                <div class="relative">
+                    <input type="text" id="mobile-search-input" placeholder="Search products..." 
+                           class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                    <i data-lucide="search" class="absolute left-3 top-2.5 text-slate-400 w-5 h-5"></i>
+                </div>
+            </div>
+        </div>
     </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-pattern text-white py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1 text-center md:text-left">
+                <span class="inline-block py-1 px-3 rounded-full bg-cyan-900/50 border border-cyan-500/30 text-cyan-400 text-sm font-semibold mb-6">Premium Refurbished Tech</span>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-tight">
+                    High Performance.<br>
+                    <span class="text-cyan-400">Second Life.</span>
+                </h1>
+                <p class="text-slate-400 text-lg mb-8 max-w-lg mx-auto md:mx-0">
+                    Upgrade your setup without breaking the bank. Quality tested second-hand laptops and desktop accessories with a 30-day warranty.
+                </p>
+                <div class="flex gap-4 justify-center md:justify-start">
+                    <button onclick="filterProducts('all')" class="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                        Shop All
+                    </button>
+                    <button onclick="filterProducts('laptop')" class="bg-slate-700 hover:bg-slate-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                        Laptops
+                    </button>
+                </div>
+            </div>
+            <!-- Decorative Icon Graphic -->
+            <div class="flex-1 flex justify-center">
+                <div class="relative w-64 h-64 md:w-80 md:h-80 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full blur-3xl opacity-20 absolute animate-pulse"></div>
+                <img src="https://placehold.co/600x400/1e293b/06b6d4?text=Top+Tier+Laptops&font=roboto" alt="Hero Laptop" class="relative rounded-xl shadow-2xl border border-slate-700 transform rotate-[-5deg] hover:rotate-0 transition-transform duration-500">
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex gap-4 overflow-x-auto no-scrollbar" id="category-filters">
+                <button class="category-btn active px-6 py-2 rounded-full bg-slate-900 text-white text-sm font-medium whitespace-nowrap transition-all" data-category="all">All Products</button>
+                <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="laptop">Laptops</button>
+                <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="monitor">Monitors</button>
+                <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="accessory">Accessories</button>
+                <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="component">Components</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-slate-900">Featured Inventory</h2>
+            <div class="text-sm text-slate-500">Showing <span id="product-count">0</span> items</div>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Products injected via JS -->
+        </div>
+
+        <!-- No Results State -->
+        <div id="no-results" class="hidden text-center py-20">
+            <div class="bg-slate-100 p-6 rounded-full inline-block mb-4">
+                <i data-lucide="search-x" class="w-12 h-12 text-slate-400"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">No products found</h3>
+            <p class="text-slate-500">Try adjusting your search or category filter.</p>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section class="bg-white py-16 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-6 rounded-2xl bg-slate-50">
+                <div class="bg-cyan-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
+                    <i data-lucide="shield-check"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Quality Tested</h3>
+                <p class="text-slate-500 text-sm">Every device undergoes a 20-point inspection before listing.</p>
+            </div>
+            <div class="text-center p-6 rounded-2xl bg-slate-50">
+                <div class="bg-cyan-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
+                    <i data-lucide="truck"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Fast Shipping</h3>
+                <p class="text-slate-500 text-sm">We ship within 24 hours. Secure packaging guaranteed.</p>
+            </div>
+            <div class="text-center p-6 rounded-2xl bg-slate-50">
+                <div class="bg-cyan-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
+                    <i data-lucide="recycle"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Eco-Friendly</h3>
+                <p class="text-slate-500 text-sm">Buying second-hand reduces e-waste and carbon footprint.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="bg-cyan-500 p-1.5 rounded text-white">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">Cynet</span>
+                </div>
+                <p class="text-slate-400 text-sm max-w-sm mb-6">
+                    Your trusted destination for affordable, high-quality second-hand laptops and computer parts. Giving tech a second chance.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-cyan-400 transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-cyan-400 transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-cyan-400 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Shop</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-cyan-400 transition-colors">Laptops</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition-colors">Desktops</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition-colors">Monitors</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition-colors">Components</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> 123 Tech Avenue, Silicon City</li>
+                    <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +1 (555) 123-4567</li>
+                    <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> support@cynet.store</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+            &copy; 2023 Cynet Store. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar Overlay -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] hidden transition-opacity duration-300 opacity-0"></div>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-[70] transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="shopping-bag" class="w-5 h-5"></i> Your Cart
+            </h2>
+            <button id="close-cart" class="p-2 hover:bg-slate-200 rounded-full transition-colors">
+                <i data-lucide="x" class="w-6 h-6 text-slate-500"></i>
+            </button>
+        </div>
+        
+        <!-- Cart Items Container -->
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Empty State -->
+            <div id="cart-empty" class="text-center py-10">
+                <div class="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="shopping-cart" class="w-8 h-8 text-slate-300"></i>
+                </div>
+                <p class="text-slate-500">Your cart is empty.</p>
+                <button onclick="closeCart()" class="mt-4 text-cyan-600 font-semibold text-sm hover:underline">Start Shopping</button>
+            </div>
+            <!-- Dynamic Items go here -->
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="p-6 border-t border-slate-100 bg-slate-50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-slate-600">Subtotal</span>
+                <span id="cart-total" class="text-xl font-bold text-slate-900">$0.00</span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3.5 rounded-xl font-bold shadow-lg shadow-cyan-500/30 transition-all transform active:scale-95 flex justify-center items-center gap-2">
+                Checkout <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Mock Data
+        const products = [
+            {
+                id: 1,
+                name: "Dell Latitude 5490",
+                category: "laptop",
+                price: 349.99,
+                originalPrice: 899.99,
+                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=Dell+Latitude",
+                specs: "i5-8th Gen | 16GB RAM | 256GB SSD",
+                condition: "Excellent"
+            },
+            {
+                id: 2,
+                name: "Lenovo ThinkPad T480",
+                category: "laptop",
+                price: 399.99,
+                originalPrice: 950.00,
+                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=ThinkPad+T480",
+                specs: "i5-8th Gen | 8GB RAM | 512GB SSD",
+                condition: "Good"
+            },
+            {
+                id: 3,
+                name: "Logitech MX Master 2S",
+                category: "accessory",
+                price: 45.00,
+                originalPrice: 99.99,
+                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=MX+Master+Mouse",
+                specs: "Wireless | Ergonomic | Used",
+                condition: "Like New"
+            },
+            {
+                id: 4,
+                name: "HP EliteBook 840 G5",
+                category: "laptop",
+                price: 420.00,
+                originalPrice: 1050.00,
+                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=HP+EliteBook",
+                specs: "i7-8th Gen | 16GB RAM | 512GB NVMe",
+                condition: "Very Good"
+            },
+            {
+                id: 5,
+                name: "Samsung 24\" IPS Monitor",
+                category: "monitor",
+                price: 85.00,
+                originalPrice: 180.00,
+                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=24+Inch+Monitor",
+                specs: "1080p | 75Hz | HDMI",
+                condition: "Good"
+            },
+            {
+                id: 6,
+                name: "Corsair K70 Mechanical Keyboard",
+                category: "accessory",
+                price: 65.00,
+                originalPrice: 140.00,
+                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=Mech+Keyboard",
+                specs: "Cherry MX Red | RGB | Wired",
+                condition: "Used - Cleaned"
+            },
+            {
+                id: 7,
+                name: "NVIDIA GTX 1660 Super",
+                category: "component",
+                price: 150.00,
+                originalPrice: 240.00,
+                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=GTX+1660+Super",
+                specs: "6GB GDDR6 | Dual Fan",
+                condition: "Used"
+            },
+            {
+                id: 8,
+                name: "MacBook Air 2017",
+                category: "laptop",
+                price: 299.00,
+                originalPrice: 999.00,
+                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=MacBook+Air",
+                specs: "i5 | 8GB RAM | 128GB SSD",
+                condition: "Fair"
+            }
+        ];
+
+        // State
+        let cart = [];
+        let activeCategory = 'all';
+        let searchQuery = '';
+
+        // DOM Elements
+        const productGrid = document.getElementById('product-grid');
+        const cartBtn = document.getElementById('cart-btn');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartCountBadge = document.getElementById('cart-count');
+        const cartTotalDisplay = document.getElementById('cart-total');
+        const cartEmptyState = document.getElementById('cart-empty');
+        const searchInput = document.getElementById('search-input');
+        const mobileSearchInput = document.getElementById('mobile-search-input');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const noResults = document.getElementById('no-results');
+        const productCount = document.getElementById('product-count');
+
+        // Initial Render
+        function init() {
+            renderProducts();
+            lucide.createIcons();
+            
+            // Event Listeners
+            cartBtn.addEventListener('click', openCart);
+            closeCartBtn.addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+            
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                renderProducts();
+            });
+            
+            mobileSearchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                renderProducts();
+            });
+
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active styling
+                    categoryBtns.forEach(b => {
+                        b.classList.remove('bg-slate-900', 'text-white');
+                        b.classList.add('bg-slate-100', 'text-slate-600');
+                    });
+                    btn.classList.remove('bg-slate-100', 'text-slate-600');
+                    btn.classList.add('bg-slate-900', 'text-white');
+                    
+                    activeCategory = btn.dataset.category;
+                    renderProducts();
+                });
+            });
+        }
+
+        // Render Products
+        function renderProducts() {
+            productGrid.innerHTML = '';
+            
+            const filteredProducts = products.filter(p => {
+                const matchesCategory = activeCategory === 'all' || p.category === activeCategory;
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery) || 
+                                    p.specs.toLowerCase().includes(searchQuery);
+                return matchesCategory && matchesSearch;
+            });
+
+            productCount.textContent = filteredProducts.length;
+
+            if (filteredProducts.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                
+                filteredProducts.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = 'group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100';
+                    card.innerHTML = `
+                        <div class="relative overflow-hidden rounded-xl bg-slate-100 mb-4 aspect-[4/3]">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-2 right-2 bg-white/90 backdrop-blur text-xs font-bold px-2 py-1 rounded shadow-sm">
+                                ${product.condition}
+                            </div>
+                            <button onclick="addToCart(${product.id})" class="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-lg text-slate-900 hover:text-cyan-600 hover:scale-110 transition-all opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="px-1">
+                            <div class="text-xs text-cyan-600 font-bold mb-1 uppercase tracking-wide">${product.category}</div>
+                            <h3 class="font-bold text-slate-900 text-lg leading-tight mb-1 truncate">${product.name}</h3>
+                            <p class="text-xs text-slate-500 mb-3">${product.specs}</p>
+                            <div class="flex items-end justify-between">
+                                <div>
+                                    <span class="text-lg font-bold text-slate-900">$${product.price.toFixed(2)}</span>
+                                    <span class="text-xs text-slate-400 line-through ml-1">$${product.originalPrice.toFixed(2)}</span>
+                                </div>
+                                <button onclick="addToCart(${product.id})" class="text-sm font-semibold text-slate-900 underline decoration-cyan-400 hover:text-cyan-600 transition-colors">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    productGrid.appendChild(card);
+                });
+                lucide.createIcons();
+            }
+        }
+
+        // Global functions for Filtering (Exposed for HTML onclicks)
+        window.filterProducts = (category) => {
+            activeCategory = category;
+            
+            // Update buttons visually
+            categoryBtns.forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.remove('bg-slate-100', 'text-slate-600');
+                    btn.classList.add('bg-slate-900', 'text-white');
+                } else {
+                    btn.classList.remove('bg-slate-900', 'text-white');
+                    btn.classList.add('bg-slate-100', 'text-slate-600');
+                }
+            });
+
+            // Scroll to product grid on mobile
+            const offset = productGrid.getBoundingClientRect().top + window.scrollY - 150;
+            window.scrollTo({top: offset, behavior: 'smooth'});
+
+            renderProducts();
+        };
+
+        // Cart Functions
+        window.addToCart = (productId) => {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            
+            // Temporary feedback on cart icon
+            cartBtn.classList.add('bg-cyan-100');
+            setTimeout(() => cartBtn.classList.remove('bg-cyan-100'), 200);
+            
+            // Open cart automatically on first add
+            if (cart.length === 1 && cart[0].quantity === 1) {
+                openCart();
+            }
+        };
+
+        window.removeFromCart = (productId) => {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        };
+
+        window.updateQuantity = (productId, change) => {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        };
+
+        function updateCartUI() {
+            // Update Badge
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountBadge.textContent = totalItems;
+            
+            if (totalItems > 0) {
+                cartCountBadge.classList.remove('scale-0');
+            } else {
+                cartCountBadge.classList.add('scale-0');
+            }
+
+            // Render Items
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItemsContainer.appendChild(cartEmptyState);
+                cartEmptyState.style.display = 'block';
+            } else {
+                cartEmptyState.style.display = 'none';
+                cart.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex gap-4 p-3 bg-white border border-slate-100 rounded-xl shadow-sm';
+                    itemEl.innerHTML = `
+                        <div class="w-16 h-16 bg-slate-100 rounded-lg flex-shrink-0 overflow-hidden">
+                            <img src="${item.image}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-sm text-slate-900 truncate">${item.name}</h4>
+                            <div class="text-xs text-slate-500 mb-2">$${item.price}</div>
+                            <div class="flex items-center gap-3">
+                                <div class="flex items-center bg-slate-100 rounded-lg">
+                                    <button onclick="updateQuantity(${item.id}, -1)" class="p-1 px-2 hover:bg-slate-200 rounded-l-lg transition-colors">-</button>
+                                    <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
+                                    <button onclick="updateQuantity(${item.id}, 1)" class="p-1 px-2 hover:bg-slate-200 rounded-r-lg transition-colors">+</button>
+                                </div>
+                                <button onclick="removeFromCart(${item.id})" class="text-xs text-red-400 hover:text-red-600 underline">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemEl);
+                });
+            }
+
+            // Update Total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotalDisplay.textContent = '$' + total.toFixed(2);
+            
+            lucide.createIcons();
+        }
+
+        function openCart() {
+            cartSidebar.classList.remove('translate-x-full');
+            cartOverlay.classList.remove('hidden');
+            // Trigger reflow for opacity transition
+            void cartOverlay.offsetWidth; 
+            cartOverlay.classList.remove('opacity-0');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            cartSidebar.classList.add('translate-x-full');
+            cartOverlay.classList.add('opacity-0');
+            setTimeout(() => {
+                cartOverlay.classList.add('hidden');
+            }, 300);
+            document.body.style.overflow = '';
+        }
+
+        window.checkout = () => {
+            if (cart.length === 0) return;
+            alert(`Thank you for shopping at Cynet!\n\nOrder Total: ${cartTotalDisplay.textContent}\n\nThis is a demo checkout.`);
+            cart = [];
+            updateCartUI();
+            closeCart();
+        };
+
+        // Initialize App
+        init();
+
+    </script>
 </body>
 </html>
