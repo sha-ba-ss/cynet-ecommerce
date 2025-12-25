@@ -62,10 +62,12 @@
                 </div>
 
                 <!-- Desktop Nav Links -->
-                <div class="hidden md:flex items-center gap-8 mx-8">
+                <div class="hidden min-[850px]:flex items-center gap-8 mx-8">
                     <button onclick="switchView('home')" id="nav-home" class="text-sm font-semibold text-cyan-600">Home</button>
                     <button onclick="switchView('about')" id="nav-about" class="text-sm font-semibold text-slate-600 hover:text-cyan-600 transition-colors">About Us</button>
-                    <button onclick="switchView('myorders')" id="nav-myorders" class="text-sm font-semibold text-slate-600 hover:text-cyan-600 transition-colors">My Orders</button>
+                    <button onclick="switchView('orders')"id="nav-myorders" class="nav-link text-sm font-semibold text-slate-600 hover:text-cyan-600 px-3 py-2 flex items-center gap-1">
+                        <i data-lucide="package" class="w-4 h-4"></i> My Orders
+                    </button>
                     <div class="relative w-64">
                         <input type="text" id="search-input" placeholder="Search..." 
                                class="w-full pl-9 pr-4 py-1.5 text-sm rounded-full border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-50">
@@ -79,18 +81,23 @@
                         <i data-lucide="shopping-cart" class="w-6 h-6 text-slate-700"></i>
                         <span id="cart-count" class="absolute top-0 right-0 bg-cyan-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full transform scale-0 transition-transform duration-200">0</span>
                     </button>
-                    <button class="md:hidden p-2 hover:bg-slate-100 rounded-full" id="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <button class="min-[850px]:hidden p-2 hover:bg-slate-100 rounded-full" id="mobile-menu-btn" onclick="toggleMobileMenu()">
                         <i data-lucide="menu" class="w-6 h-6 text-slate-700"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white absolute left-0 right-0 shadow-lg p-4 z-40">
+            <div id="mobile-menu" class="hidden min-[850px]:hidden border-t border-slate-100 bg-white absolute left-0 right-0 shadow-lg p-4 z-40">
                 <div class="space-y-4">
                     <button onclick="switchView('home'); toggleMobileMenu()" class="block w-full text-left font-semibold text-slate-700">Home</button>
                     <button onclick="switchView('about'); toggleMobileMenu()" class="block w-full text-left font-semibold text-slate-700">About Us</button>
-                    <div class="relative">
+                    <button onclick="switchView('orders')" class="nav-link text-sm font-semibold text-slate-600 hover:text-cyan-600  flex items-center gap-1">
+                        <i data-lucide="package" class="w-4 h-4"></i> My Orders
+                    </button>
+                </div>
+
+                    <div class="relative top-2">
                         <input type="text" id="mobile-search-input" placeholder="Search products..." 
                                class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         <i data-lucide="search" class="absolute left-3 top-2.5 text-slate-400 w-5 h-5"></i>
@@ -407,7 +414,27 @@
         </div>
 
     </div>
+        <!-- MY ORDERS VIEW -->
+        <div id="orders-view" class="hidden fade-in py-12 px-4 max-w-4xl mx-auto min-h-[60vh]">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl font-bold text-slate-900">My Orders</h1>
+                <div class="bg-cyan-100 text-cyan-700 px-4 py-1 rounded-full text-sm font-bold">
+                    <span id="order-count-badge">0</span> Orders
+                </div>
+            </div>
 
+            <div id="orders-list" class="space-y-6">
+                <!-- Empty State -->
+                <div id="no-orders" class="text-center py-20 bg-white rounded-2xl border border-dashed border-slate-300">
+                    <div class="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="package-search" class="w-8 h-8 text-slate-400"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-700">No orders yet</h3>
+                    <p class="text-slate-500 mb-6">Looks like you haven't placed any orders yet.</p>
+                    <button onclick="switchView('home')" class="bg-cyan-600 text-white px-6 py-2 rounded-lg font-semibold">Start Shopping</button>
+                </div>
+            </div>
+        </div>
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-300 py-12 mt-auto">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -488,6 +515,7 @@
         function switchView(viewName) {
             const homeView = document.getElementById('home-view');
             const aboutView = document.getElementById('about-view');
+            const myOrdersView = document.getElementById('orders-view');
             const checkoutView = document.getElementById('checkout-view');
             const navHome = document.getElementById('nav-home');
             const navAbout = document.getElementById('nav-about');
@@ -498,6 +526,7 @@
             // Hide all first
             homeView.classList.add('hidden');
             aboutView.classList.add('hidden');
+            myOrdersView.classList.add('hidden');
             checkoutView.classList.add('hidden');
             
             // Reset Nav
@@ -517,7 +546,11 @@
                 aboutView.classList.remove('hidden');
                 navAbout.classList.add('text-cyan-600');
                 navAbout.classList.remove('text-slate-600');
-            } else if (viewName === 'checkout') {
+            }else if (viewName === 'orders') {
+                myOrdersView.classList.remove('hidden');
+                navMyOrders.classList.add('text-cyan-600');
+                navMyOrders.classList.remove('text-slate-600');
+            }else if (viewName === 'checkout') {
                 checkoutView.classList.remove('hidden');
             }
         }
@@ -835,7 +868,103 @@
                 switchView('home');
             }, 300);
         };
+function goToCheckout() {
+            if(cart.length === 0) return;
+            closeCart();
+            switchView('checkout');
+            const total = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+            document.getElementById('checkout-total-val').innerText = '₹' + total.toLocaleString();
+            document.getElementById('checkout-summary').innerHTML = cart.map(c => `
+                <div class="flex justify-between text-sm">
+                    <span>${c.name} (x${c.qty})</span>
+                    <span>₹${(c.qty * c.price).toLocaleString()}</span>
+                </div>
+            `).join('');
+        }
 
+        function processOrder(e) {
+            e.preventDefault();
+            const total = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+            const orderId = 'CY' + Math.floor(100000 + Math.random() * 900000);
+            const date = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+            
+            // Create Order Record
+            const newOrder = {
+                id: orderId,
+                date: date,
+                total: total,
+                items: [...cart],
+                status: 'Processing',
+                statusColor: 'bg-amber-100 text-amber-700'
+            };
+
+            orders.unshift(newOrder); // Add to history
+            cart = [];
+            updateCartCount();
+            document.getElementById('success-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function hideSuccess() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        function renderOrders() {
+            const list = document.getElementById('orders-list');
+            const countBadge = document.getElementById('order-count-badge');
+            
+            countBadge.innerText = orders.length;
+
+            if(orders.length === 0) {
+                document.getElementById('no-orders').classList.remove('hidden');
+                list.innerHTML = '';
+            } else {
+                document.getElementById('no-orders').classList.add('hidden');
+                list.innerHTML = orders.map(order => `
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="bg-slate-50 px-6 py-4 flex flex-wrap justify-between items-center gap-4 border-b">
+                            <div>
+                                <div class="text-xs text-slate-500 uppercase font-bold">Order ID</div>
+                                <div class="font-bold text-slate-900">#${order.id}</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-500 uppercase font-bold">Placed On</div>
+                                <div class="font-bold text-slate-900">${order.date}</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-500 uppercase font-bold">Total</div>
+                                <div class="font-bold text-cyan-600">₹${order.total.toLocaleString()}</div>
+                            </div>
+                            <div class="${order.statusColor} px-3 py-1 rounded-full text-xs font-bold">
+                                ${order.status}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                ${order.items.map(item => `
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-12 h-12 bg-slate-100 rounded flex-shrink-0">
+                                            <img src="${item.img}" class="w-full h-full object-cover rounded">
+                                        </div>
+                                        <div class="flex-grow">
+                                            <div class="font-bold text-slate-800">${item.name}</div>
+                                            <div class="text-sm text-slate-500">Qty: ${item.qty}</div>
+                                        </div>
+                                        <div class="font-bold text-slate-900 text-sm">₹${(item.price * item.qty).toLocaleString()}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="mt-6 pt-6 border-t flex justify-end gap-3">
+                                <button onclick="switchView('about')" class="text-sm font-semibold text-slate-600 hover:text-cyan-600 transition-colors">Contact Support</button>
+                                <button class="text-sm font-bold bg-slate-100 px-4 py-2 rounded-lg hover:bg-slate-200 transition-colors">Reorder</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            lucide.createIcons();
+        }
+        
         init();
     </script>
 </body>
