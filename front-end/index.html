@@ -65,6 +65,7 @@
                 <div class="hidden md:flex items-center gap-8 mx-8">
                     <button onclick="switchView('home')" id="nav-home" class="text-sm font-semibold text-cyan-600">Home</button>
                     <button onclick="switchView('about')" id="nav-about" class="text-sm font-semibold text-slate-600 hover:text-cyan-600 transition-colors">About Us</button>
+                    <button onclick="switchView('myorders')" id="nav-myorders" class="text-sm font-semibold text-slate-600 hover:text-cyan-600 transition-colors">My Orders</button>
                     <div class="relative w-64">
                         <input type="text" id="search-input" placeholder="Search..." 
                                class="w-full pl-9 pr-4 py-1.5 text-sm rounded-full border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-50">
@@ -490,6 +491,7 @@
             const checkoutView = document.getElementById('checkout-view');
             const navHome = document.getElementById('nav-home');
             const navAbout = document.getElementById('nav-about');
+            const navMyOrders = document.getElementById('nav-myorders');
 
             window.scrollTo(0,0);
 
@@ -503,11 +505,14 @@
             navHome.classList.add('text-slate-600');
             navAbout.classList.remove('text-cyan-600');
             navAbout.classList.add('text-slate-600');
+            navMyOrders.classList.remove('text-cyan-600');
+            navMyOrders.classList.add('text-slate-600');
 
             if (viewName === 'home') {
                 homeView.classList.remove('hidden');
                 navHome.classList.add('text-cyan-600');
                 navHome.classList.remove('text-slate-600');
+                
             } else if (viewName === 'about') {
                 aboutView.classList.remove('hidden');
                 navAbout.classList.add('text-cyan-600');
