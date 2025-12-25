@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cynet | Second-Hand Tech & Accessories</title>
+    <title>Cynet IT Solution | Cherpulassery</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,7 +28,6 @@
             background-image: radial-gradient(#1e293b 1px, transparent 1px);
             background-size: 20px 20px;
         }
-        /* Hide scrollbar for category scroll on mobile */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -36,27 +35,41 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
 
     <!-- Navigation -->
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="switchView('home')">
                     <div class="bg-cyan-500 p-2 rounded-lg text-white">
                         <i data-lucide="cpu" class="w-6 h-6"></i>
                     </div>
-                    <span class="text-2xl font-bold tracking-tight text-slate-900">Cynet</span>
+                    <div>
+                        <span class="text-xl md:text-2xl font-bold tracking-tight text-slate-900 block leading-none">Cynet</span>
+                        <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">IT Solution</span>
+                    </div>
                 </div>
 
-                <!-- Desktop Search -->
-                <div class="hidden md:flex flex-1 max-w-lg mx-8 relative">
-                    <input type="text" id="search-input" placeholder="Search laptops, GPUs, monitors..." 
-                           class="w-full pl-10 pr-4 py-2 rounded-full border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-50">
-                    <i data-lucide="search" class="absolute left-3 top-2.5 text-slate-400 w-5 h-5"></i>
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center gap-8 mx-8">
+                    <button onclick="switchView('home')" id="nav-home" class="text-sm font-semibold text-cyan-600">Home</button>
+                    <button onclick="switchView('about')" id="nav-about" class="text-sm font-semibold text-slate-600 hover:text-cyan-600 transition-colors">About Us</button>
+                    <div class="relative w-64">
+                        <input type="text" id="search-input" placeholder="Search..." 
+                               class="w-full pl-9 pr-4 py-1.5 text-sm rounded-full border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-slate-50">
+                        <i data-lucide="search" class="absolute left-3 top-2 text-slate-400 w-4 h-4"></i>
+                    </div>
                 </div>
 
                 <!-- Icons -->
@@ -65,153 +78,368 @@
                         <i data-lucide="shopping-cart" class="w-6 h-6 text-slate-700"></i>
                         <span id="cart-count" class="absolute top-0 right-0 bg-cyan-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full transform scale-0 transition-transform duration-200">0</span>
                     </button>
-                    <button class="md:hidden p-2 hover:bg-slate-100 rounded-full" id="mobile-menu-btn">
+                    <button class="md:hidden p-2 hover:bg-slate-100 rounded-full" id="mobile-menu-btn" onclick="toggleMobileMenu()">
                         <i data-lucide="menu" class="w-6 h-6 text-slate-700"></i>
                     </button>
                 </div>
             </div>
             
-            <!-- Mobile Search (Visible only on small screens) -->
-            <div class="md:hidden py-3 pb-4">
-                <div class="relative">
-                    <input type="text" id="mobile-search-input" placeholder="Search products..." 
-                           class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                    <i data-lucide="search" class="absolute left-3 top-2.5 text-slate-400 w-5 h-5"></i>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white absolute left-0 right-0 shadow-lg p-4 z-40">
+                <div class="space-y-4">
+                    <button onclick="switchView('home'); toggleMobileMenu()" class="block w-full text-left font-semibold text-slate-700">Home</button>
+                    <button onclick="switchView('about'); toggleMobileMenu()" class="block w-full text-left font-semibold text-slate-700">About Us</button>
+                    <div class="relative">
+                        <input type="text" id="mobile-search-input" placeholder="Search products..." 
+                               class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        <i data-lucide="search" class="absolute left-3 top-2.5 text-slate-400 w-5 h-5"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="hero-pattern text-white py-16 md:py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 text-center md:text-left">
-                <span class="inline-block py-1 px-3 rounded-full bg-cyan-900/50 border border-cyan-500/30 text-cyan-400 text-sm font-semibold mb-6">Premium Refurbished Tech</span>
-                <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-tight">
-                    High Performance.<br>
-                    <span class="text-cyan-400">Second Life.</span>
-                </h1>
-                <p class="text-slate-400 text-lg mb-8 max-w-lg mx-auto md:mx-0">
-                    Upgrade your setup without breaking the bank. Quality tested second-hand laptops and desktop accessories with a 30-day warranty.
-                </p>
-                <div class="flex gap-4 justify-center md:justify-start">
-                    <button onclick="filterProducts('all')" class="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-                        Shop All
+    <!-- Content Views Container -->
+    <div id="content-container" class="flex-grow">
+        
+        <!-- HOME PAGE VIEW -->
+        <div id="home-view" class="fade-in">
+            <!-- Hero Section -->
+            <div class="hero-pattern text-white py-16 md:py-24 relative overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12 relative z-10">
+                    <div class="flex-1 text-center md:text-left">
+                        <span class="inline-block py-1 px-3 rounded-full bg-cyan-900/50 border border-cyan-500/30 text-cyan-400 text-sm font-semibold mb-6">Cherpulassery's Trusted Tech Shop</span>
+                        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-tight">
+                            Premium Tech.<br>
+                            <span class="text-cyan-400">Pocket Friendly.</span>
+                        </h1>
+                        <p class="text-slate-400 text-lg mb-8 max-w-lg mx-auto md:mx-0">
+                            The best deals on second-hand laptops and accessories in Palakkad. Quality tested, warrantied, and ready for work or play.
+                        </p>
+                        <div class="flex gap-4 justify-center md:justify-start">
+                            <button onclick="scrollToProducts()" class="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                                Shop Now
+                            </button>
+                            <button onclick="switchView('about')" class="bg-slate-700 hover:bg-slate-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                                Visit Store
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Hero Image -->
+                    <div class="flex-1 flex justify-center">
+                        <div class="relative w-64 h-64 md:w-80 md:h-80 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full blur-3xl opacity-20 absolute animate-pulse"></div>
+                        <img src="https://placehold.co/600x400/1e293b/06b6d4?text=Cynet+Laptops&font=roboto" alt="Hero Laptop" class="relative rounded-xl shadow-2xl border border-slate-700 transform rotate-[-5deg] hover:rotate-0 transition-transform duration-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="bg-white border-b border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 py-4">
+                    <div class="flex gap-4 overflow-x-auto no-scrollbar" id="category-filters">
+                        <button class="category-btn active px-6 py-2 rounded-full bg-slate-900 text-white text-sm font-medium whitespace-nowrap transition-all" data-category="all">All Products</button>
+                        <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="laptop">Laptops</button>
+                        <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="monitor">Monitors</button>
+                        <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="accessory">Accessories</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Product Grid -->
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold text-slate-900">Latest Arrivals</h2>
+                    <div class="text-sm text-slate-500">Showing <span id="product-count">0</span> items</div>
+                </div>
+
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Products injected via JS -->
+                </div>
+
+                <div id="no-results" class="hidden text-center py-20">
+                    <div class="bg-slate-100 p-6 rounded-full inline-block mb-4">
+                        <i data-lucide="search-x" class="w-12 h-12 text-slate-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">No products found</h3>
+                    <p class="text-slate-500">Try adjusting your search.</p>
+                </div>
+            </main>
+
+            <!-- Features Section -->
+            <section class="bg-white py-16 border-t border-slate-200">
+                <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center p-6 rounded-2xl bg-slate-50">
+                        <div class="bg-cyan-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">1 Month Warranty</h3>
+                        <p class="text-slate-500 text-sm">We stand by our quality. All laptops come with a shop warranty for peace of mind.</p>
+                    </div>
+                    <div class="text-center p-6 rounded-2xl bg-slate-50">
+                        <div class="bg-cyan-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
+                            <i data-lucide="wrench"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Service Support</h3>
+                        <p class="text-slate-500 text-sm">Chip-level service and upgrades available right here in Cherpulassery.</p>
+                    </div>
+                    <div class="text-center p-6 rounded-2xl bg-slate-50">
+                        <div class="bg-cyan-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
+                            <i data-lucide="award"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">A Grade Quality</h3>
+                        <p class="text-slate-500 text-sm">We only stock "A Grade" off-lease corporate laptops from Dell, HP, and Lenovo.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ABOUT PAGE VIEW -->
+        <div id="about-view" class="hidden fade-in">
+            <div class="bg-slate-900 text-white py-20 relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
+                <div class="max-w-7xl mx-auto px-4 relative z-10 text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">About Cynet IT Solution</h1>
+                    <p class="text-xl text-slate-300 max-w-2xl mx-auto">Your trusted partner for affordable technology in Cherpulassery.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-block py-1 px-3 rounded-full bg-cyan-100 text-cyan-700 text-sm font-bold mb-4">Our Story</div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Bridging the Digital Divide</h2>
+                    <div class="prose text-slate-600 space-y-4">
+                        <p>
+                            Welcome to <strong>Cynet IT Solution</strong>. Located in the heart of Cherpulassery, we started with a simple mission: to make high-quality computing accessible to everyone in our community.
+                        </p>
+                        <p>
+                            We understand that buying a brand-new laptop can be a significant financial burden. That's why we specialize in <strong>premium second-hand business laptops</strong>. These are devices built to last, originally used by large corporations, which we refurbish to look and perform like new.
+                        </p>
+                        <p>
+                            Whether you are a student attending online classes, a professional working from home, or a business owner looking to equip your office, Cynet offers you top-tier performance at a fraction of the showroom price.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-8 grid grid-cols-2 gap-4">
+                        <div class="border-l-4 border-cyan-500 pl-4">
+                            <div class="text-2xl font-bold text-slate-900">500+</div>
+                            <div class="text-sm text-slate-500">Happy Customers</div>
+                        </div>
+                        <div class="border-l-4 border-cyan-500 pl-4">
+                            <div class="text-2xl font-bold text-slate-900">100%</div>
+                            <div class="text-sm text-slate-500">Quality Checked</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative h-96 rounded-2xl overflow-hidden shadow-2xl group">
+                    <img src="https://lh3.googleusercontent.com/p/AF1QipNEaPaD8c-kM_Rwcl3VCVBabt5mYJvFGhKU-uih=s1360-w1360-h1020-rw" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" alt="Repair Shop">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-8">
+                        <div class="text-white">
+                            <div class="font-bold text-lg">Visit Our Store</div>
+                            <div class="text-sm text-slate-300">Experience the quality before you buy.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 py-16">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-slate-900">Visit Us Today</h2>
+                        <p class="text-slate-500 mt-2">We are conveniently located to serve you better.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200 text-center">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
+                                <i data-lucide="map-pin"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Our Location</h3>
+                            <p class="text-slate-600">
+                                Cynet IT Solution<br>
+                                Near Private Bus Stand<br>
+                                Cherpulassery, Kerala 679503
+                            </p>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200 text-center">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
+                                <i data-lucide="clock"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Working Hours</h3>
+                            <p class="text-slate-600">
+                                Mon - Sat: 9:30 AM - 8:00 PM<br>
+                                Sunday: 10:00 AM - 2:00 PM
+                            </p>
+                        </div>
+                        <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200 text-center">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
+                                <i data-lucide="phone"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Contact Us</h3>
+                            <p class="text-slate-600">
+                                Phone: +91 98765 43210<br>
+                                Email: cynet.cherpulassery@gmail.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHECKOUT PAGE VIEW -->
+        <div id="checkout-view" class="hidden fade-in min-h-[60vh] bg-slate-50 pb-16">
+            <div class="bg-white border-b border-slate-200 py-6 mb-8">
+                <div class="max-w-7xl mx-auto px-4">
+                    <button onclick="switchView('home')" class="text-sm text-slate-500 hover:text-cyan-600 flex items-center gap-1 mb-2">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Shop
                     </button>
-                    <button onclick="filterProducts('laptop')" class="bg-slate-700 hover:bg-slate-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-                        Laptops
-                    </button>
+                    <h1 class="text-3xl font-bold text-slate-900">Secure Checkout</h1>
                 </div>
             </div>
-            <!-- Decorative Icon Graphic -->
-            <div class="flex-1 flex justify-center">
-                <div class="relative w-64 h-64 md:w-80 md:h-80 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full blur-3xl opacity-20 absolute animate-pulse"></div>
-                <img src="https://placehold.co/600x400/1e293b/06b6d4?text=Top+Tier+Laptops&font=roboto" alt="Hero Laptop" class="relative rounded-xl shadow-2xl border border-slate-700 transform rotate-[-5deg] hover:rotate-0 transition-transform duration-500">
+
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left Column: Billing Details -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                            <div class="bg-cyan-100 p-2 rounded-lg text-cyan-600"><i data-lucide="user"></i></div>
+                            Customer Details
+                        </h2>
+                        
+                        <form id="checkout-form" onsubmit="processOrder(event)" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
+                                    <input type="text" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all" placeholder="John Doe">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Phone Number</label>
+                                    <input type="tel" required pattern="[0-9]{10}" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all" placeholder="9876543210">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Delivery Address</label>
+                                <textarea required rows="3" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all" placeholder="House Name, Street, Landmark..."></textarea>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">City / Town</label>
+                                    <input type="text" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all" value="Cherpulassery">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Pincode</label>
+                                    <input type="text" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-all" placeholder="679503">
+                                </div>
+                            </div>
+
+                            <hr class="border-slate-100 my-6">
+
+                            <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                                <div class="bg-cyan-100 p-2 rounded-lg text-cyan-600"><i data-lucide="credit-card"></i></div>
+                                Payment Method
+                            </h2>
+
+                            <div class="space-y-3">
+                                <label class="flex items-center p-4 border border-cyan-500 bg-cyan-50/50 rounded-xl cursor-pointer transition-all">
+                                    <input type="radio" name="payment" value="cod" checked class="w-5 h-5 text-cyan-600 border-slate-300 focus:ring-cyan-500">
+                                    <span class="ml-3 font-medium text-slate-900">Cash on Delivery</span>
+                                    <span class="ml-auto text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded">Recommended</span>
+                                </label>
+                                <label class="flex items-center p-4 border border-slate-200 rounded-xl cursor-pointer hover:border-cyan-300 transition-all">
+                                    <input type="radio" name="payment" value="upi" class="w-5 h-5 text-cyan-600 border-slate-300 focus:ring-cyan-500">
+                                    <span class="ml-3 font-medium text-slate-900">UPI / GPay</span>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white text-lg font-bold py-4 rounded-xl shadow-lg shadow-cyan-500/30 transition-all transform active:scale-95 mt-6">
+                                Place Order
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right Column: Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sticky top-24">
+                        <h3 class="text-lg font-bold text-slate-900 mb-4">Order Summary</h3>
+                        <div id="checkout-items" class="space-y-4 mb-6 max-h-80 overflow-y-auto pr-2">
+                            <!-- Items injected via JS -->
+                        </div>
+                        
+                        <div class="space-y-3 border-t border-slate-100 pt-4">
+                            <div class="flex justify-between text-slate-600">
+                                <span>Subtotal</span>
+                                <span id="checkout-subtotal">₹0.00</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Shipping</span>
+                                <span class="text-green-600 font-medium">Free</span>
+                            </div>
+                            <div class="flex justify-between text-slate-900 font-bold text-xl border-t border-slate-100 pt-3">
+                                <span>Total</span>
+                                <span id="checkout-total">₹0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-lg p-4 mt-6 text-xs text-slate-500 flex gap-2">
+                            <i data-lucide="shield-check" class="w-12 h-12 text-slate-400 shrink-0"></i>
+                            <p>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Success Modal -->
+        <div id="success-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+            <div class="bg-white rounded-2xl max-w-sm w-full p-8 text-center transform scale-95 transition-transform duration-300" id="success-modal-content">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500">
+                    <i data-lucide="check" class="w-10 h-10"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 mb-2">Order Placed!</h2>
+                <p class="text-slate-500 mb-6">Thank you for shopping with Cynet. We will contact you shortly to confirm delivery.</p>
+                <button onclick="closeSuccessModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition-colors">
+                    Continue Shopping
+                </button>
+            </div>
+        </div>
+
     </div>
-
-    <!-- Categories -->
-    <div class="bg-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 py-4">
-            <div class="flex gap-4 overflow-x-auto no-scrollbar" id="category-filters">
-                <button class="category-btn active px-6 py-2 rounded-full bg-slate-900 text-white text-sm font-medium whitespace-nowrap transition-all" data-category="all">All Products</button>
-                <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="laptop">Laptops</button>
-                <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="monitor">Monitors</button>
-                <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="accessory">Accessories</button>
-                <button class="category-btn px-6 py-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-sm font-medium whitespace-nowrap transition-all" data-category="component">Components</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-slate-900">Featured Inventory</h2>
-            <div class="text-sm text-slate-500">Showing <span id="product-count">0</span> items</div>
-        </div>
-
-        <!-- Product Grid -->
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            <!-- Products injected via JS -->
-        </div>
-
-        <!-- No Results State -->
-        <div id="no-results" class="hidden text-center py-20">
-            <div class="bg-slate-100 p-6 rounded-full inline-block mb-4">
-                <i data-lucide="search-x" class="w-12 h-12 text-slate-400"></i>
-            </div>
-            <h3 class="text-xl font-bold text-slate-900 mb-2">No products found</h3>
-            <p class="text-slate-500">Try adjusting your search or category filter.</p>
-        </div>
-    </main>
-
-    <!-- Features Section -->
-    <section class="bg-white py-16 border-t border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="text-center p-6 rounded-2xl bg-slate-50">
-                <div class="bg-cyan-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
-                    <i data-lucide="shield-check"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2">Quality Tested</h3>
-                <p class="text-slate-500 text-sm">Every device undergoes a 20-point inspection before listing.</p>
-            </div>
-            <div class="text-center p-6 rounded-2xl bg-slate-50">
-                <div class="bg-cyan-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
-                    <i data-lucide="truck"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2">Fast Shipping</h3>
-                <p class="text-slate-500 text-sm">We ship within 24 hours. Secure packaging guaranteed.</p>
-            </div>
-            <div class="text-center p-6 rounded-2xl bg-slate-50">
-                <div class="bg-cyan-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-cyan-600">
-                    <i data-lucide="recycle"></i>
-                </div>
-                <h3 class="font-bold text-lg mb-2">Eco-Friendly</h3>
-                <p class="text-slate-500 text-sm">Buying second-hand reduces e-waste and carbon footprint.</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-300 py-12">
+    <footer class="bg-slate-900 text-slate-300 py-12 mt-auto">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-2 mb-4">
                     <div class="bg-cyan-500 p-1.5 rounded text-white">
                         <i data-lucide="cpu" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-xl font-bold text-white">Cynet</span>
+                    <span class="text-xl font-bold text-white">Cynet IT Solution</span>
                 </div>
                 <p class="text-slate-400 text-sm max-w-sm mb-6">
-                    Your trusted destination for affordable, high-quality second-hand laptops and computer parts. Giving tech a second chance.
+                    Cherpulassery's favorite destination for affordable, high-quality second-hand laptops and computer parts. Giving tech a second chance.
                 </p>
-                <div class="flex gap-4">
-                    <a href="#" class="hover:text-cyan-400 transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                    <a href="#" class="hover:text-cyan-400 transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
-                    <a href="#" class="hover:text-cyan-400 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                </div>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-4">Shop</h4>
+                <h4 class="text-white font-bold mb-4">Quick Links</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-cyan-400 transition-colors">Laptops</a></li>
-                    <li><a href="#" class="hover:text-cyan-400 transition-colors">Desktops</a></li>
-                    <li><a href="#" class="hover:text-cyan-400 transition-colors">Monitors</a></li>
-                    <li><a href="#" class="hover:text-cyan-400 transition-colors">Components</a></li>
+                    <li><button onclick="switchView('home'); scrollToProducts()" class="hover:text-cyan-400 transition-colors">Laptops</button></li>
+                    <li><button onclick="switchView('home'); scrollToProducts()" class="hover:text-cyan-400 transition-colors">Monitors</button></li>
+                    <li><button onclick="switchView('about')" class="hover:text-cyan-400 transition-colors">About Us</button></li>
+                    <li><button onclick="switchView('about')" class="hover:text-cyan-400 transition-colors">Contact</button></li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-4">Contact</h4>
+                <h4 class="text-white font-bold mb-4">Find Us</h4>
                 <ul class="space-y-2 text-sm">
-                    <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> 123 Tech Avenue, Silicon City</li>
-                    <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +1 (555) 123-4567</li>
-                    <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> support@cynet.store</li>
+                    <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-cyan-500"></i> Cherpulassery, Palakkad</li>
+                    <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-cyan-500"></i> +91 98765 43210</li>
                 </ul>
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
-            &copy; 2023 Cynet Store. All rights reserved.
+            &copy; 2023 Cynet IT Solution. All rights reserved.
         </div>
     </footer>
 
@@ -239,7 +467,6 @@
                 <p class="text-slate-500">Your cart is empty.</p>
                 <button onclick="closeCart()" class="mt-4 text-cyan-600 font-semibold text-sm hover:underline">Start Shopping</button>
             </div>
-            <!-- Dynamic Items go here -->
         </div>
 
         <!-- Cart Footer -->
@@ -256,88 +483,66 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // Mock Data
-        const products = [
-            {
-                id: 1,
-                name: "Dell Latitude 5490",
-                category: "laptop",
-                price: 349.99,
-                originalPrice: 899.99,
-                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=Dell+Latitude",
-                specs: "i5-8th Gen | 16GB RAM | 256GB SSD",
-                condition: "Excellent"
-            },
-            {
-                id: 2,
-                name: "Lenovo ThinkPad T480",
-                category: "laptop",
-                price: 399.99,
-                originalPrice: 950.00,
-                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=ThinkPad+T480",
-                specs: "i5-8th Gen | 8GB RAM | 512GB SSD",
-                condition: "Good"
-            },
-            {
-                id: 3,
-                name: "Logitech MX Master 2S",
-                category: "accessory",
-                price: 45.00,
-                originalPrice: 99.99,
-                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=MX+Master+Mouse",
-                specs: "Wireless | Ergonomic | Used",
-                condition: "Like New"
-            },
-            {
-                id: 4,
-                name: "HP EliteBook 840 G5",
-                category: "laptop",
-                price: 420.00,
-                originalPrice: 1050.00,
-                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=HP+EliteBook",
-                specs: "i7-8th Gen | 16GB RAM | 512GB NVMe",
-                condition: "Very Good"
-            },
-            {
-                id: 5,
-                name: "Samsung 24\" IPS Monitor",
-                category: "monitor",
-                price: 85.00,
-                originalPrice: 180.00,
-                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=24+Inch+Monitor",
-                specs: "1080p | 75Hz | HDMI",
-                condition: "Good"
-            },
-            {
-                id: 6,
-                name: "Corsair K70 Mechanical Keyboard",
-                category: "accessory",
-                price: 65.00,
-                originalPrice: 140.00,
-                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=Mech+Keyboard",
-                specs: "Cherry MX Red | RGB | Wired",
-                condition: "Used - Cleaned"
-            },
-            {
-                id: 7,
-                name: "NVIDIA GTX 1660 Super",
-                category: "component",
-                price: 150.00,
-                originalPrice: 240.00,
-                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=GTX+1660+Super",
-                specs: "6GB GDDR6 | Dual Fan",
-                condition: "Used"
-            },
-            {
-                id: 8,
-                name: "MacBook Air 2017",
-                category: "laptop",
-                price: 299.00,
-                originalPrice: 999.00,
-                image: "https://placehold.co/400x300/e2e8f0/1e293b?text=MacBook+Air",
-                specs: "i5 | 8GB RAM | 128GB SSD",
-                condition: "Fair"
+        // --- Navigation Logic ---
+        function switchView(viewName) {
+            const homeView = document.getElementById('home-view');
+            const aboutView = document.getElementById('about-view');
+            const checkoutView = document.getElementById('checkout-view');
+            const navHome = document.getElementById('nav-home');
+            const navAbout = document.getElementById('nav-about');
+
+            window.scrollTo(0,0);
+
+            // Hide all first
+            homeView.classList.add('hidden');
+            aboutView.classList.add('hidden');
+            checkoutView.classList.add('hidden');
+            
+            // Reset Nav
+            navHome.classList.remove('text-cyan-600');
+            navHome.classList.add('text-slate-600');
+            navAbout.classList.remove('text-cyan-600');
+            navAbout.classList.add('text-slate-600');
+
+            if (viewName === 'home') {
+                homeView.classList.remove('hidden');
+                navHome.classList.add('text-cyan-600');
+                navHome.classList.remove('text-slate-600');
+            } else if (viewName === 'about') {
+                aboutView.classList.remove('hidden');
+                navAbout.classList.add('text-cyan-600');
+                navAbout.classList.remove('text-slate-600');
+            } else if (viewName === 'checkout') {
+                checkoutView.classList.remove('hidden');
             }
+        }
+
+        function scrollToProducts() {
+            switchView('home');
+            setTimeout(() => {
+                const grid = document.getElementById('product-grid');
+                if(grid) {
+                    const offset = grid.getBoundingClientRect().top + window.scrollY - 150;
+                    window.scrollTo({top: offset, behavior: 'smooth'});
+                }
+            }, 100);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- Mock Data ---
+        const products = [
+            { id: 1, name: "Dell Latitude 5490", category: "laptop", price: 22000, originalPrice: 65000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=Dell+Latitude", specs: "i5-8th Gen | 16GB RAM | 256GB SSD", condition: "Excellent" },
+            { id: 2, name: "Lenovo ThinkPad T480", category: "laptop", price: 24500, originalPrice: 72000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=ThinkPad+T480", specs: "i5-8th Gen | 8GB RAM | 512GB SSD", condition: "Good" },
+            { id: 3, name: "Logitech MX Master 2S", category: "accessory", price: 3500, originalPrice: 8000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=MX+Master+Mouse", specs: "Wireless | Ergonomic | Used", condition: "Like New" },
+            { id: 4, name: "HP EliteBook 840 G5", category: "laptop", price: 26000, originalPrice: 75000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=HP+EliteBook", specs: "i7-8th Gen | 16GB RAM | 512GB NVMe", condition: "Very Good" },
+            { id: 5, name: "Samsung 24\" IPS Monitor", category: "monitor", price: 6500, originalPrice: 12000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=24+Inch+Monitor", specs: "1080p | 75Hz | HDMI", condition: "Good" },
+            { id: 6, name: "Corsair K70 Mech Keyboard", category: "accessory", price: 4500, originalPrice: 11000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=Mech+Keyboard", specs: "Cherry MX Red | RGB | Wired", condition: "Used - Cleaned" },
+            { id: 7, name: "NVIDIA GTX 1660 Super", category: "component", price: 12000, originalPrice: 22000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=GTX+1660+Super", specs: "6GB GDDR6 | Dual Fan", condition: "Used" },
+            { id: 8, name: "MacBook Air 2017", category: "laptop", price: 28000, originalPrice: 65000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=MacBook+Air", specs: "i5 | 8GB RAM | 128GB SSD", condition: "Fair" }
         ];
 
         // State
@@ -373,17 +578,20 @@
             
             searchInput.addEventListener('input', (e) => {
                 searchQuery = e.target.value.toLowerCase();
+                if(searchQuery.length > 0) switchView('home');
                 renderProducts();
             });
             
-            mobileSearchInput.addEventListener('input', (e) => {
-                searchQuery = e.target.value.toLowerCase();
-                renderProducts();
-            });
+            if(mobileSearchInput) {
+                mobileSearchInput.addEventListener('input', (e) => {
+                    searchQuery = e.target.value.toLowerCase();
+                    if(searchQuery.length > 0) switchView('home');
+                    renderProducts();
+                });
+            }
 
             categoryBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Update active styling
                     categoryBtns.forEach(b => {
                         b.classList.remove('bg-slate-900', 'text-white');
                         b.classList.add('bg-slate-100', 'text-slate-600');
@@ -434,8 +642,8 @@
                             <p class="text-xs text-slate-500 mb-3">${product.specs}</p>
                             <div class="flex items-end justify-between">
                                 <div>
-                                    <span class="text-lg font-bold text-slate-900">$${product.price.toFixed(2)}</span>
-                                    <span class="text-xs text-slate-400 line-through ml-1">$${product.originalPrice.toFixed(2)}</span>
+                                    <span class="text-lg font-bold text-slate-900">₹${product.price.toLocaleString()}</span>
+                                    <span class="text-xs text-slate-400 line-through ml-1">₹${product.originalPrice.toLocaleString()}</span>
                                 </div>
                                 <button onclick="addToCart(${product.id})" class="text-sm font-semibold text-slate-900 underline decoration-cyan-400 hover:text-cyan-600 transition-colors">
                                     Add
@@ -448,28 +656,6 @@
                 lucide.createIcons();
             }
         }
-
-        // Global functions for Filtering (Exposed for HTML onclicks)
-        window.filterProducts = (category) => {
-            activeCategory = category;
-            
-            // Update buttons visually
-            categoryBtns.forEach(btn => {
-                if (btn.dataset.category === category) {
-                    btn.classList.remove('bg-slate-100', 'text-slate-600');
-                    btn.classList.add('bg-slate-900', 'text-white');
-                } else {
-                    btn.classList.remove('bg-slate-900', 'text-white');
-                    btn.classList.add('bg-slate-100', 'text-slate-600');
-                }
-            });
-
-            // Scroll to product grid on mobile
-            const offset = productGrid.getBoundingClientRect().top + window.scrollY - 150;
-            window.scrollTo({top: offset, behavior: 'smooth'});
-
-            renderProducts();
-        };
 
         // Cart Functions
         window.addToCart = (productId) => {
@@ -484,11 +670,10 @@
 
             updateCartUI();
             
-            // Temporary feedback on cart icon
+            // Visual feedback
             cartBtn.classList.add('bg-cyan-100');
             setTimeout(() => cartBtn.classList.remove('bg-cyan-100'), 200);
             
-            // Open cart automatically on first add
             if (cart.length === 1 && cart[0].quantity === 1) {
                 openCart();
             }
@@ -512,7 +697,6 @@
         };
 
         function updateCartUI() {
-            // Update Badge
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             cartCountBadge.textContent = totalItems;
             
@@ -522,7 +706,6 @@
                 cartCountBadge.classList.add('scale-0');
             }
 
-            // Render Items
             cartItemsContainer.innerHTML = '';
             
             if (cart.length === 0) {
@@ -539,7 +722,7 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <h4 class="font-bold text-sm text-slate-900 truncate">${item.name}</h4>
-                            <div class="text-xs text-slate-500 mb-2">$${item.price}</div>
+                            <div class="text-xs text-slate-500 mb-2">₹${item.price.toLocaleString()}</div>
                             <div class="flex items-center gap-3">
                                 <div class="flex items-center bg-slate-100 rounded-lg">
                                     <button onclick="updateQuantity(${item.id}, -1)" class="p-1 px-2 hover:bg-slate-200 rounded-l-lg transition-colors">-</button>
@@ -554,17 +737,17 @@
                 });
             }
 
-            // Update Total
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            cartTotalDisplay.textContent = '$' + total.toFixed(2);
+            const formattedTotal = '₹' + total.toLocaleString();
+            cartTotalDisplay.textContent = formattedTotal;
             
             lucide.createIcons();
+            return total;
         }
 
         function openCart() {
             cartSidebar.classList.remove('translate-x-full');
             cartOverlay.classList.remove('hidden');
-            // Trigger reflow for opacity transition
             void cartOverlay.offsetWidth; 
             cartOverlay.classList.remove('opacity-0');
             document.body.style.overflow = 'hidden';
@@ -579,17 +762,76 @@
             document.body.style.overflow = '';
         }
 
+        // --- Checkout Logic ---
+        
         window.checkout = () => {
             if (cart.length === 0) return;
-            alert(`Thank you for shopping at Cynet!\n\nOrder Total: ${cartTotalDisplay.textContent}\n\nThis is a demo checkout.`);
-            cart = [];
-            updateCartUI();
             closeCart();
+            switchView('checkout');
+            renderCheckoutSummary();
         };
 
-        // Initialize App
-        init();
+        function renderCheckoutSummary() {
+            const container = document.getElementById('checkout-items');
+            container.innerHTML = '';
+            
+            cart.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'flex gap-4 py-2 border-b border-slate-50 last:border-0';
+                el.innerHTML = `
+                    <div class="w-12 h-12 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0">
+                        <img src="${item.image}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-semibold text-sm text-slate-900 line-clamp-1">${item.name}</h4>
+                            <span class="font-bold text-sm text-slate-900">₹${(item.price * item.quantity).toLocaleString()}</span>
+                        </div>
+                        <div class="text-xs text-slate-500">Qty: ${item.quantity} × ₹${item.price.toLocaleString()}</div>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
 
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('checkout-subtotal').textContent = '₹' + total.toLocaleString();
+            document.getElementById('checkout-total').textContent = '₹' + total.toLocaleString();
+        }
+
+        window.processOrder = (e) => {
+            e.preventDefault();
+            
+            // Show Success Modal
+            const modal = document.getElementById('success-modal');
+            const modalContent = document.getElementById('success-modal-content');
+            
+            modal.classList.remove('hidden');
+            // Trigger reflow
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+            
+            // Clear Cart
+            cart = [];
+            updateCartUI();
+        };
+
+        window.closeSuccessModal = () => {
+            const modal = document.getElementById('success-modal');
+            const modalContent = document.getElementById('success-modal-content');
+            
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                switchView('home');
+            }, 300);
+        };
+
+        init();
     </script>
 </body>
 </html>
