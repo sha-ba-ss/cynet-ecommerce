@@ -52,12 +52,12 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center gap-2 cursor-pointer" onclick="switchView('home')">
-                    <div class="bg-cyan-500 p-2 rounded-lg text-white">
-                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                    <div class="bg-cyan-500  rounded-lg text-white">
+                        <img src="Assets/icon5.png" alt="Cynet Logo" class="w-10 h-10 rounded-lg">
                     </div>
-                    <div>
-                        <span class="text-xl md:text-2xl font-bold tracking-tight text-slate-900 block leading-none">Cynet</span>
-                        <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">IT Solution</span>
+                    <div >
+                        <span class="text-xl md:text-3xl font-bold tracking-tight text-slate-900 block leading-none">Cynet</span>
+                        <span class="text-[7px] text-slate-500 uppercase tracking-wider font-semibold block translate-x-9 -translate-y-1.5">IT Solution</span>
                     </div>
                 </div>
 
@@ -136,7 +136,7 @@
                     <!-- Hero Image -->
                     <div class="flex-1 flex justify-center">
                         <div class="relative w-64 h-64 md:w-80 md:h-80 bg-gradient-to-tr from-cyan-500 to-blue-600 rounded-full blur-3xl opacity-20 absolute animate-pulse"></div>
-                        <img src="https://placehold.co/600x400/1e293b/06b6d4?text=Cynet+Laptops&font=roboto" alt="Hero Laptop" class="relative rounded-xl shadow-2xl border border-slate-700 transform rotate-[-5deg] hover:rotate-0 transition-transform duration-500">
+                        <img src="Assets/Screenshot 2025-12-26 173640.png" alt="Hero Laptop" class="relative rounded-xl shadow-2xl border border-slate-700 transform rotate-[-5deg] hover:rotate-0 transition-transform duration-500">
                     </div>
                 </div>
             </div>
@@ -425,7 +425,7 @@
 
             <div id="orders-list" class="space-y-6">
                 <!-- Empty State -->
-                <div id="no-orders" class="text-center py-20 bg-white rounded-2xl border border-dashed border-slate-300">
+                <div id="no-orders" class="text-center p-20 bg-white rounded-2xl border border-dashed border-slate-300">
                     <div class="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i data-lucide="package-search" class="w-8 h-8 text-slate-400"></i>
                     </div>
@@ -440,8 +440,8 @@
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-2 mb-4">
-                    <div class="bg-cyan-500 p-1.5 rounded text-white">
-                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                    <div class="  rounded text-white">
+                        <img src="Assets/icon5.png" alt="Cynet Logo" class="w-10 h-10 rounded-lg">
                     </div>
                     <span class="text-xl font-bold text-white">Cynet IT Solution</span>
                 </div>
@@ -573,14 +573,14 @@
 
         // --- Mock Data ---
         const products = [
-            { id: 1, name: "Dell Latitude 5490", category: "laptop", price: 22000, originalPrice: 65000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=Dell+Latitude", specs: "i5-8th Gen | 16GB RAM | 256GB SSD", condition: "Excellent" },
-            { id: 2, name: "Lenovo ThinkPad T480", category: "laptop", price: 24500, originalPrice: 72000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=ThinkPad+T480", specs: "i5-8th Gen | 8GB RAM | 512GB SSD", condition: "Good" },
-            { id: 3, name: "Logitech MX Master 2S", category: "accessory", price: 3500, originalPrice: 8000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=MX+Master+Mouse", specs: "Wireless | Ergonomic | Used", condition: "Like New" },
-            { id: 4, name: "HP EliteBook 840 G5", category: "laptop", price: 26000, originalPrice: 75000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=HP+EliteBook", specs: "i7-8th Gen | 16GB RAM | 512GB NVMe", condition: "Very Good" },
-            { id: 5, name: "Samsung 24\" IPS Monitor", category: "monitor", price: 6500, originalPrice: 12000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=24+Inch+Monitor", specs: "1080p | 75Hz | HDMI", condition: "Good" },
-            { id: 6, name: "Corsair K70 Mech Keyboard", category: "accessory", price: 4500, originalPrice: 11000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=Mech+Keyboard", specs: "Cherry MX Red | RGB | Wired", condition: "Used - Cleaned" },
-            { id: 7, name: "NVIDIA GTX 1660 Super", category: "component", price: 12000, originalPrice: 22000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=GTX+1660+Super", specs: "6GB GDDR6 | Dual Fan", condition: "Used" },
-            { id: 8, name: "MacBook Air 2017", category: "laptop", price: 28000, originalPrice: 65000, image: "https://placehold.co/400x300/e2e8f0/1e293b?text=MacBook+Air", specs: "i5 | 8GB RAM | 128GB SSD", condition: "Fair" }
+            { id: 1, name: "Dell Latitude 5490", category: "laptop", price: 22000, originalPrice: 65000, image: "https://instagram.fcok6-1.fna.fbcdn.net/v/t51.82787-15/587815686_17986672814868991_1718490525634751797_n.jpg?stp=dst-jpegr_e35_p640x640_sh0.08_tt6&_nc_cat=101&ig_cache_key=Mzc3OTMwMTk4NTg3NTQ3OTExMw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5oZHIuQzMifQ%3D%3D&_nc_ohc=Ir4iJJnScLoQ7kNvwHyt5K5&_nc_oc=AdlVxaNRo0sbkXK0rqODsT6E8pHLpFOgGQWQiQThrO-uwwv4KZt_a8e2bdWtVD9N308&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=-1&_nc_ht=instagram.fcok6-1.fna&_nc_gid=xcC5VsdZTPQ2VD4Jdwvmxw&oh=00_AfkU5LzC86Zbhi6ZNGe7kk5nCcY7s_bcIIaZIHO8UED9cw&oe=69543AB0", specs: "i5-8th Gen | 16GB RAM | 256GB SSD", condition: "Excellent" },
+            { id: 2, name: "Lenovo ThinkPad T480", category: "laptop", price: 24500, originalPrice: 72000, image: "https://instagram.fcok6-1.fna.fbcdn.net/v/t51.82787-15/588113163_17985888080868991_28750674832558832_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08_tt6&_nc_cat=101&ig_cache_key=Mzc3MzQ4MTE1OTYwNzU0MTYxMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5zZHIuQzMifQ%3D%3D&_nc_ohc=VUDmMVFRfAoQ7kNvwE7sZ4-&_nc_oc=AdmuETIrKI60yRBXqsAs62VOLmIFsVHVq51suqIdqqcaCJuuZcu9dLcLLhxYfnxDVbs&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcok6-1.fna&_nc_gid=xcC5VsdZTPQ2VD4Jdwvmxw&oh=00_AfmxZoJzK-SoDzB-ppW-bKzD7Y_ljln1oF3lzarfgDnwsA&oe=69542F1D", specs: "i5-8th Gen | 8GB RAM | 512GB SSD", condition: "Good" },
+            { id: 3, name: "Logitech MX Master 2S", category: "accessory", price: 3500, originalPrice: 8000, image: "https://m.media-amazon.com/images/I/61v1eEAWXYL.jpg", specs: "Wireless | Ergonomic | Used", condition: "Like New" },
+            { id: 4, name: "HP EliteBook 840 G5", category: "laptop", price: 26000, originalPrice: 75000, image: "https://instagram.fcok6-1.fna.fbcdn.net/v/t51.82787-15/536754993_17975781179868991_8177848442847958263_n.webp?stp=dst-webp_p640x640_sh0.08&_nc_cat=107&ig_cache_key=MzcwNDA3OTE5NTAyMTE4ODE1Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5zZHIuQzMifQ%3D%3D&_nc_ohc=rvpRz7cvzEoQ7kNvwFKJ5_w&_nc_oc=AdmIrvrDQoSpKlQoIbUSPCGhGNO3grrj8q-m0UI7a7QBWgEc2bnFAL-A_QzJc6Y7M5o&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcok6-1.fna&_nc_gid=uu97wp9CKwgWNJ_DyXTHRg&oh=00_AfkNOfRgd6aDP0hdPjIGuY46RnA-4Ia5VZ_UC9BpOvCf6w&oe=69543847", specs: "i7-8th Gen | 16GB RAM | 512GB NVMe", condition: "Very Good" },
+            { id: 5, name: "Samsung 24\" IPS Monitor", category: "monitor", price: 6500, originalPrice: 12000, image: "https://images.samsung.com/is/image/samsung/p6pim/in/ls24c310eawxxl/gallery/in-essential-s3-27s31c-453765-ls24c310eawxxl-537300156?$Q90_1368_1094_F_JPG$", specs: "1080p | 75Hz | HDMI", condition: "Good" },
+            { id: 6, name: "Corsair K70 Mech Keyboard", category: "accessory", price: 4500, originalPrice: 11000, image: "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/peripherals/input-devices/dell/keyboards/aw420k/media-gallery/keyboard-aw420k-xkb-05-bk-gallery-01.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=2778&qlt=100,1&resMode=sharp2&size=2778,804&chrss=full", specs: "Cherry MX Red | RGB | Wired", condition: "Used - Cleaned" },
+            { id: 7, name: "NVIDIA GTX 1660 Super", category: "component", price: 12000, originalPrice: 22000, image: "https://m.media-amazon.com/images/I/71tJe-BUlWL._SX679_.jpg", specs: "6GB GDDR6 | Dual Fan", condition: "Used" },
+            { id: 8, name: "MacBook Air 2017", category: "laptop", price: 28000, originalPrice: 65000, image: "https://instagram.fcok6-2.fna.fbcdn.net/v/t51.82787-15/530830423_17974755878868991_2708451316090533034_n.webp?stp=dst-webp_p640x640_sh0.08&_nc_cat=100&ig_cache_key=MzY5Njg5MzcwMzk1NTUyODQ0NA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5zZHIuQzMifQ%3D%3D&_nc_ohc=_IkwY9AnbhQQ7kNvwGxQAn_&_nc_oc=AdklCjjLaxhWBTeiLHhnstPcNmEn7Vvhly3gLwslY4F7wsJ5mA34cJgFc7Ompey5IiY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcok6-2.fna&_nc_gid=uu97wp9CKwgWNJ_DyXTHRg&oh=00_AfnR24m3RFpnFa8FrX5Z7Q94RWspwTwWeO-69Dx6hbiOdw&oe=69543494", specs: "i5 | 8GB RAM | 128GB SSD", condition: "Fair" }
         ];
 
         // State
